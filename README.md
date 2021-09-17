@@ -34,4 +34,4 @@ Email is preferred.
 ## Screen shot and link to application
 
 [Budget-Tracker](https://dry-caverns-36728.herokuapp.com/)
-![screenshot budget-tracker](https://github.com/anaumov1/budget-tracker-an/tree/main/public/icons/screenshot.PNG)
+![screenshot budget-tracker](main/public/icons/screenshot.PNG)
