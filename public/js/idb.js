@@ -35,6 +35,39 @@ function saveRecord(record) {
     budgetObjectStore.add(record)
 };
 
+function uploadBudget() {
+    const transaction = db.transaction(['update_budget'], 'readwrite');
+
+    const budgetObjectStore = transaction.objectStore('update_budget');
+
+    const getAll = budgetObjectStore.getAll();
+
+    getAll.onsuccess = function () {
+        if (getAll.result.length > 0) {
+            fetch('/api/transaction/bulk', {
+                method: 'POST',
+                body: JSON.stringify(getAll.result),
+                headers: {
+                    Accept: 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(serverResponse => {
+                    if (serverResponse.message) {
+                        throw new Error(serverResponse);
+                    }
+                    const transaction = db.transaction(['update_budget'], 'readwrite');
+                    const budgetObjectStore = transaction.objectStore('update_budget');
+                    budgetObjectStore.clear();
+
+                    alert('All saved budget data has been submitted!');
+                })
+                .catch(err => console.log(err));
+        }
+    };
+};
+
 
 
 
